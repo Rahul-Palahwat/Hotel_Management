@@ -1,0 +1,12 @@
+.total{
+    font-family: 'Ubuntu', sans-serif;
+    /* padding: 5px; */
+    background-color: white;
+    height: 76%;
+    /* width: 100%; */
+    box-shadow: 1px 0px 5px rgba(88, 175, 242, 0.2),-1px 0px 5px rgba(88, 175, 242, 0.2);
+}
+
+.active{
+    background-color: red;
+}
