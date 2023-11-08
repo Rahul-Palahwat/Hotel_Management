@@ -120,6 +120,7 @@ function App() {
       }
     }
     setBookings(dataAfterFilter);
+    console.log("Data after filter", dataAfterFilter);
     response = await fetch(`${host}/allRooms`, {
       method: 'GET',
       headers: {

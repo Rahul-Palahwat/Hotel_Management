@@ -20,6 +20,7 @@ const Bookings = (props) => {
                 {bookings.map((booking, i) => {
                     return (<BookingCard booking={booking} key={i} hashMap={hashMap} getAllBookings={getAllBookings} />)
                 })}
+                {bookings.length === 0 ? <h1>No Booking Found...</h1> : ""}
                 {/* <BookingCard />
                 <BookingCard />
                 <BookingCard />
