@@ -5,14 +5,14 @@ import { Flex } from '@chakra-ui/layout'
 import './Bookings.css'
 
 const Bookings = (props) => {
-    console.log("Hellos i am insode booking", props);
+    // console.log("Hellos i am insode booking", props);
     const { bookings, hashMap, getAllBookings } = props;
 
     // const { bookings, setBookings } = useState([]);
     // useEffect(() => {
     //     setBookings(props.bookings);
     // }, [props])
-    console.log("Bookings let", bookings);
+    // console.log("Bookings let", bookings);
     return (<Flex direction={"column"} alignItems={"center"} width={"100%"}>
         <Flex alignContent={"center"} fontSize={"2rem"} m="1rem">Bookings</Flex>
         <Flex className='scroll' width={"100%"}>

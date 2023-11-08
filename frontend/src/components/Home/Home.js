@@ -1,13 +1,12 @@
 import { Button, Flex, Input, Select } from '@chakra-ui/react'
 import React, { useState, useEffect } from 'react'
 import Bookings from '../Bookings/Bookings'
-import { SearchIcon } from '@chakra-ui/icons'
 
 import './Home.css'
 
 const Home = (props) => {
     const { bookings, hashMap, getAllBookings, filters, setFilters } = props;
-    console.log("Props in home", props);
+    // console.log("Props in home", props);
 
     const rooms = Object.keys(hashMap);
 
@@ -17,23 +16,20 @@ const Home = (props) => {
         setBookingStatus(val);
         let newFilters = filters;
         newFilters.status = val;
-        // setFilters({
-        //     ...filters, status: val
-        // })
         setFilters(newFilters);
-        console.log("Updated filters", bookingStatus, filters, val);
+        // console.log("Updated filters", bookingStatus, filters, val);
         getAllBookings();
     }
 
 
     const [roomType, setRoomType] = useState("");
     const updateRoomType = (val) => {
-        console.log("Hello insise update")
+        // console.log("Hello insise update")
         setRoomType(val);
         let newFilters = filters;
         newFilters.room_type = val;
         setFilters(newFilters);
-        console.log("Updated filters", roomType, filters, val);
+        // console.log("Updated filters", roomType, filters, val);
         getAllBookings();
     }
 
@@ -48,26 +44,42 @@ const Home = (props) => {
         getAllBookings();
     }
 
-    const [startDate, setStartDate] = useState();
+    const [startDate, setStartDate] = useState('');
     const onChangeStart = (e) => {
         let val = e.target.value;
-        val = new Date(val).getTime();
-        console.log("Val in time", val);
-        setStartDate(val);
+        let date = new Date(val);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        date.setMilliseconds(0);
+        const istOffset = 330; // IST is UTC+5:30
+        date.setMinutes(date.getMinutes() + istOffset);
+        const formattedDate = date.toISOString().slice(0, 16);
+        setStartDate(formattedDate);
+        console.log("Date in filter", date, formattedDate)
         let newFilters = filters;
+        val = date.getTime();
+        // console.log("Val in time", val);
         newFilters.start_time = val;
         setFilters(newFilters);
         getAllBookings();
     }
 
 
-    const [endDate, setEndDate] = useState();
+    const [endDate, setEndDate] = useState('');
     const onChangeEnd = (e) => {
         let val = e.target.value;
-        val = new Date(val).getTime();
-        console.log("Val in time", val);
-        setEndDate(val);
+        let date = new Date(val);
+        date.setMinutes(0);
+        date.setSeconds(0);
+        date.setMilliseconds(0);
+        const istOffset = 330; // IST is UTC+5:30
+        date.setMinutes(date.getMinutes() + istOffset);
+        const formattedDate = date.toISOString().slice(0, 16);
+        setEndDate(formattedDate);
+        console.log("Date in filter", date, formattedDate)
         let newFilters = filters;
+        val = date.getTime();
+        // console.log("Val in time", val);
         newFilters.end_time = val;
         setFilters(newFilters);
         getAllBookings();
@@ -77,6 +89,16 @@ const Home = (props) => {
     const removeAllFilters = () => {
         let newFilters = filters;
         newFilters.end_time = "";
+        newFilters.start_time = "";
+        newFilters.status = "all";
+        newFilters.room_type = "";
+        newFilters.room_no = "All";
+        setStartDate('');
+        setEndDate('');
+        setBookingStatus('all');
+        setRoomType('');
+        setRoomNo('All');
+        getAllBookings();
     }
 
 
@@ -85,8 +107,8 @@ const Home = (props) => {
     }, [roomType, bookingStatus])
 
     return (
-        <Flex height={"110vh"} width={"100%"} p="0.5rem">
-            <Flex width={"25%"} border={"1px solid rgb(199,206,215)"} borderRadius={"0.5rem"} flexDirection={"column"} p="1rem" m="1rem" className='total'>
+        <Flex height={"110vh"} width={"100%"} p="0.5rem" className='home'>
+            <Flex border={"1px solid rgb(199,206,215)"} borderRadius={"0.5rem"} p="1rem" m="1rem" className='total'>
                 <Flex fontSize={"1.5rem"} fontWeight={"bold"}>Filters</Flex>
                 <Flex justifyContent={"center"}><hr style={{ "width": "100%" }} /></Flex>
                 <Flex mt="1rem" fontWeight={"bold"} justifyContent={"space-between"} width={"80%"}>
@@ -123,20 +145,12 @@ const Home = (props) => {
                     Room no
                 </Flex>
                 <Flex width={"100%"} bgColor="white" mt="1rem" mb="1rem">
-                    <Select placeholder='Select Room' name="room_no" onChange={onChangeSelected}>
+                    <Select placeholder='Select Room' name="room_no" onChange={onChangeSelected} value={roomNo}>
                         <option key={-1} selected value={"All"}>All</option>
                         {rooms.map((room, i) => (
                             <option key={i} value={room}>{room}</option>
                         ))}
                     </Select>
-                    {/* <Flex width={"40vw"} bgColor="white" alignItems={"center"} borderRadius={5}>
-                        <Flex width={"100%"}>
-                            <Input type="text" placeholder='Search by Room no' />
-                        </Flex>
-                        <Flex fontSize={"1.5xl"} ml={-8}>
-                            <SearchIcon cursor={"pointer"} />
-                        </Flex>
-                    </Flex> */}
                 </Flex>
                 <Flex justifyContent={"center"}><hr style={{ "width": "100%" }} /></Flex>
                 <Flex mt="1rem" fontWeight={"bold"} justifyContent={"space-between"} width={"80%"}>
@@ -145,7 +159,7 @@ const Home = (props) => {
                 <Flex width={"100%"} bgColor="white" mt="1rem" mb="1rem">
                     <Flex width={"40vw"} bgColor="white" alignItems={"center"} borderRadius={5}>
                         <Flex width={"100%"}>
-                            <Input onChange={onChangeStart} type="datetime-local" />
+                            <Input onChange={onChangeStart} type="datetime-local" value={startDate} />
                         </Flex>
                     </Flex>
                 </Flex>
@@ -156,7 +170,7 @@ const Home = (props) => {
                 <Flex width={"100%"} bgColor="white" mt="1rem" mb="1rem">
                     <Flex width={"40vw"} bgColor="white" alignItems={"center"} borderRadius={5}>
                         <Flex width={"100%"}>
-                            <Input type="datetime-local" onChange={onChangeEnd} />
+                            <Input type="datetime-local" onChange={onChangeEnd} value={endDate} />
                         </Flex>
                     </Flex>
                 </Flex>

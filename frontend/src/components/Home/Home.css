@@ -2,7 +2,9 @@
     font-family: 'Ubuntu', sans-serif;
     /* padding: 5px; */
     background-color: white;
-    height: 76%;
+    flex-direction: column;
+    width: 25%;
+    height: 84%;
     /* width: 100%; */
     box-shadow: 1px 0px 5px rgba(88, 175, 242, 0.2),-1px 0px 5px rgba(88, 175, 242, 0.2);
 }
@@ -10,3 +12,17 @@
 .active{
     background-color: red;
 }
+
+
+@media screen and (max-width: 1200px) {
+    /* CSS styles to apply within the media query */
+    /* .home {
+      flex-direction: column;
+    }
+    .total{
+        flex-direction: row;
+        width: 100%;
+    }
+   */
+    /* Add any other styles you want for smaller screens here */
+  }

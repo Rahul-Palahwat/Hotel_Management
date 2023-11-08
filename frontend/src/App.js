@@ -35,7 +35,7 @@ function App() {
   const addRoomsToMap = (data) => {
     data.map((room) => {
       addKey(room.Room_No, room.Type, room.Price);
-      console.log("Room", room);
+      // console.log("Room", room);
     })
     setHashMap(tempMap);
 
@@ -49,50 +49,50 @@ function App() {
     let end_time = obj.end_time;
 
     if (filters.status === "upcoming") {
-      console.log("upcoming");
+      // console.log("upcoming");
       if (Date.now() > start_time) {
         return false;
       }
     } else if (filters.status === "passed") {
-      console.log("passed");
+      // console.log("passed");
       if (Date.now() < start_time) {
         return false;
       }
     }
 
     if (filters.room_type === 'Deluxe') {
-      console.log("Deluxe");
+      // console.log("Deluxe");
       if (hashMap[Room_No].type !== "Deluxe") {
         return false;
       }
     } else if (filters.room_type === 'AC') {
-      console.log("AC");
+      // console.log("AC");
       if (hashMap[Room_No].type !== "AC") {
         return false;
       }
     } else if (filters.room_type === "NON AC") {
-      console.log("NON AC");
+      // console.log("NON AC");
       if (hashMap[Room_No].type !== "NON AC") {
         return false;
       }
     }
 
     if ((filters.room_no) !== "All") {
-      console.log("Room no", filters.room_no, filters);
+      // console.log("Room no", filters.room_no, filters);
       if (Room_No !== filters.room_no) {
         return false;
       }
     }
 
     if (filters.start_time > 0) {
-      console.log("start_time");
+      // console.log("start_time");
       if (start_time !== filters.start_time) {
         return false;
       }
     }
 
     if (filters.end_time > 0) {
-      console.log("End Time");
+      // console.log("End Time");
       if (filters.end_time !== end_time) {
         return false;
       }
@@ -103,7 +103,7 @@ function App() {
 
 
   const getAllBookings = async () => {
-    console.log("I am inside fectch")
+    // console.log("I am inside fectch")
     let response = await fetch(`${host}/get_all_bookings`, {
       method: 'GET',
       headers: {
@@ -139,12 +139,6 @@ function App() {
       <Navbar hashMap={hashMap} getAllBookings={getAllBookings} />
       <Routes>
         <Route path="/" element={<Home bookings={bookings} hashMap={hashMap} getAllBookings={getAllBookings} filters={filters} setFilters={setFilters} />}></Route>
-        {/* <Route path="/cart" element={<Cart/>}></Route>
-				<Route path="/profile" element={<Profile/>}></Route>
-				<Route path="/all" element={<TotalProducts/>}></Route>
-				<Route path="/AllBestSelling" element={<AllBestSelling/>}></Route>
-				<Route path="/AllMostWishlisted" element={<AllMostWishlisted/>}></Route>
-				<Route path="/item" element={<ItemDetails/>}></Route> */}
       </Routes>
     </Wrapper>
   );

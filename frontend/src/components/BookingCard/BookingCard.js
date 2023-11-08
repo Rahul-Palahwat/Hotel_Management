@@ -10,7 +10,7 @@ import UpdateModal from '../UpdateModal/UpdateModal'
 
 const BookingCard = (props) => {
     const { booking, hashMap, getAllBookings } = props;
-    console.log("Props in Card", props);
+    // console.log("Props in Card", props);
     // for toast 
     const toast = useToast();
 
@@ -38,7 +38,7 @@ const BookingCard = (props) => {
     }, [booking])
 
     const deleteBooking = async () => {
-        console.log("Booking clicked")
+        // console.log("Booking clicked")
         try {
             const response = await fetch(`${host}/delete/${booking._id}`, {
                 method: "DELETE",
@@ -47,10 +47,10 @@ const BookingCard = (props) => {
                 }
             })
             if (response.status === 200) {
-                console.log("Booking deleted successfully");
+                // console.log("Booking deleted successfully");
                 let hours = (booking.start_time - Date.now()) / (1000 * 60 * 60);
                 let refundMessage = "";
-                console.log("Hours remainig", hours);
+                // console.log("Hours remainig", hours);
                 if (hours > 48) {
                     refundMessage = "Total Amount will be refunded";
                 } else if (hours >= 24) {
@@ -68,16 +68,12 @@ const BookingCard = (props) => {
                 })
                 getAllBookings();
             } else {
-                console.log("Error in deleting the post");
+                // console.log("Error in deleting the post");
             }
         }
         catch (error) {
             console.log({ "error": error });
         }
-    }
-
-    const updateBooking = async () => {
-
     }
 
     const { isOpen, onOpen, onClose } = useDisclosure()
